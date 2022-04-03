@@ -35,46 +35,36 @@ def nerdle():
                                                                     if (validate(equation)):
                                                                         possibleSolution = True
                                                                         return getResult(equation)
-                                                                    
+
 def validate(equation):
     global includes
-    if not all(required in equation for required in includes):
-        return False
-    if not (isItNerdle(equation)):
-        return False
-    return isItMathle(equation)
+    return all(required in equation for required in includes) and isNerdle(equation) and isMathle(equation)
 
-def isItNerdle(equation):
+def isNerdle(equation):
     global excludes
-    if (len(equation) != 8):
-        return False
-    if not all(eachChar in '0123456789+-*/=' for eachChar in equation):
-        return False
-    if any(exclude in equation for exclude in excludes):
-        return False
-    index = equation.find('=')
-    if (index == 7 or equation.count('=') != 1):
-        return False
-    if any(eachChar in '+-*/' for eachChar in equation[index + 1:]):
-        return False
-    if not any(eachChar in "+-*/" for eachChar in equation[:index]):
-        return False
-    if re.search("[-+*\/=]0\d", equation):
-        return False
-    return True
+    equalPos = equation.find('=')
+    return ((len(equation) == 8) and 
+            (all(eachChar in '0123456789+-*/=' for eachChar in equation)) and
+            (not any(exclude in equation for exclude in excludes)) and
+            (equalPos != 7) and
+            (equalPos > 3) and
+            (equation.count('=') == 1) and
+            (not any(eachChar in '+-*/' for eachChar in equation[equalPos + 1:])) and
+            (any(eachChar in "+-*/" for eachChar in equation[:equalPos])) and
+            (not re.search("[-+*\/=]0\d", equation)))
 
-def isItMathle(equation):
-    eqIndex = equation.find('=')
-    return (eval(equation[:eqIndex]) == int(equation[eqIndex + 1:]))
+def isMathle(equation):
+    equalPos = equation.find('=')
+    return (eval(equation[:equalPos]) == int(equation[equalPos + 1:]))
 
-def getResult(equation):
-    print ("    My Guess:  " + equation)
-    result = input("How did I do?  ")
+def getResult(equation, prompts= ["      My Guess:  ", "  How did I do?  "]):
+    print (prompts[0] + equation)
+    result = input(prompts[1])
     if (result == '2' or result[:8] == '22222222'):
         return True
     if (len(result) != 8 or not all(each in ['0', '1', '2'] for each in result) or result[equation.find('=')] == '0'):
-        if (len(result) == 8 and isItNerdle(result) and isItMathle(result)):
-            return getResult(result)
+        if (len(result) == 8 and isNerdle(result) and isMathle(result)):
+            return getResult(result, ["\n    Your Guess:  ", "How did you do?  "])
         else:
             print ("\nI don't understand your input.\nPlease try again.")
             return getResult(equation)
@@ -105,20 +95,19 @@ def getResult(equation):
 
 def randomizeOtimizeDigits():
     prioritiesList = ['/','*','-','+','1','2','3','4','5','6','7','8','9','0']
-    random.shuffle(prioritiesList)
     for digit in digits:
+        random.shuffle(prioritiesList)
         for prioity in prioritiesList:
             if (prioity in digit and prioity not in includes):
                 digit.remove(prioity)
                 digit.insert(0, prioity)
-        random.shuffle(prioritiesList)
 
 excludes = ['++', '+-', '+*', '+/', '+=', '+0', '-+', '--', '-*', '-/', '-=', '-0', '*+', '*-', '**', '*/', '*=', '*0', '/+', '/-', '/*', '//', '/=', '/0', '==']
 includes = ['=']
 digits = [['9','8','7','6','5','4','3','2','1'], ['+','-','*','/','8','7','6','5','4','3','2','1','0','9'], ['8','7','6','5','4','3','2','1','0','9','+','-','*','/'], ['-','*','/','8','7','6','5','4','3','2','1','0','9','+'], ['5','4','3','2','1','0','+','-','*','/','=','9','8','7','6'], ['=','9','8','7','6','5','4','3','2','1','0'], ['1','0','=','9','8','7','6','5','4','3','2'], ['2','1','0','9','8','7','6','5','4','3']]
 possibleSolution = True
 exclimation = "Woohoo!\n\n\n"
-print ("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green.\n")
+print ("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green. Or, enter a new Nerdle equation to test.\n")
 randomizeOtimizeDigits()
 while (not nerdle()):
     print()
