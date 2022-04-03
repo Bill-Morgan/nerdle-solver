@@ -93,7 +93,7 @@ def getResult(equation, prompts= ["      My Guess:  ", "  How did I do?  "]):
                     digit.remove(each)
     return (False)
 
-def randomizeOtimizeDigits():
+def randomizeOptimizeDigits():
     prioritiesList = ['/','*','-','+','1','2','3','4','5','6','7','8','9','0']
     for digit in digits:
         random.shuffle(prioritiesList)
@@ -108,11 +108,11 @@ digits = [['9','8','7','6','5','4','3','2','1'], ['+','-','*','/','8','7','6','5
 possibleSolution = True
 exclimation = "Woohoo!\n\n\n"
 print ("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green. Or, enter a new Nerdle equation to test.\n")
-randomizeOtimizeDigits()
+randomizeOptimizeDigits()
 while (not nerdle()):
     print()
     if (not possibleSolution):
         exclimation = "There was an invalid input. No solution found!\n\n\n"
         break
-    randomizeOtimizeDigits()
+    randomizeOptimizeDigits()
 print (exclimation)
