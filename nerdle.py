@@ -67,7 +67,7 @@ def getResult(equation, prompts= ["      My Guess:  ", "  How did I do?  "]):
             return getResult(result, ["\n    Your Guess:  ", "How did you do?  "])
         else:
             print ("\nI don't understand your input.\nPlease try again.")
-            return getResult(equation)
+            return getResult(equation, prompts)
     for each in '0123456789+-*/=':
         foundOneOrTwo = False
         foundZero = False
@@ -77,7 +77,8 @@ def getResult(equation, prompts= ["      My Guess:  ", "  How did I do?  "]):
                 digits[index] = [each]
                 foundZero = False
             else:
-                digits[index].remove(each)
+                if(each in digits[index]):
+                    digits[index].remove(each)
                 if (result[index] == '1' and not each in includes):
                     includes.append(each)
             foundZero = foundZero or result[index] == '0'
@@ -108,6 +109,8 @@ digits = [['9','8','7','6','5','4','3','2','1'], ['+','-','*','/','8','7','6','5
 possibleSolution = True
 exclimation = "Woohoo!\n\n\n"
 print ("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green. Or, enter a new Nerdle equation to test.\n")
+getResult("9*8-7=65")
+getResult("0+12/3=4")
 randomizeOptimizeDigits()
 while (not nerdle()):
     print()
