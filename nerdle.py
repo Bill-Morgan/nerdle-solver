@@ -9,7 +9,7 @@ from unicodedata import digit
 
 def nerdle():
     # this 7 deep nested loop may look very inefficient but at this point, there are a maximum of about 60,000 possible total combinations
-    # after processing the seed equations and most likly less than 5,000 combinations are left.
+    # after processing the seed equations and most likely less than 5,000 combinations are left.
     global possibleSolution
     possibleSolution = False
     for first in digits[0]:
