@@ -8,6 +8,8 @@ from turtle import numinput
 from unicodedata import digit
 
 def nerdle():
+    # this 7 deep nested loop may look very inefficient but at this point, there are a maximum of about 60,000 possible total combinations
+    # after processing the seed equations and most likly less than 5,000 combinations are left.
     global possibleSolution
     possibleSolution = False
     for first in digits[0]:
@@ -103,14 +105,19 @@ def randomizeOptimizeDigits():
                 digit.remove(prioity)
                 digit.insert(0, prioity)
 
-excludes = ['++', '+-', '+*', '+/', '+=', '+0', '-+', '--', '-*', '-/', '-=', '-0', '*+', '*-', '**', '*/', '*=', '*0', '/+', '/-', '/*', '//', '/=', '/0', '==']
-includes = ['=']
-digits = [['9','8','7','6','5','4','3','2','1'], ['+','-','*','/','8','7','6','5','4','3','2','1','0','9'], ['8','7','6','5','4','3','2','1','0','9','+','-','*','/'], ['-','*','/','8','7','6','5','4','3','2','1','0','9','+'], ['5','4','3','2','1','0','+','-','*','/','=','9','8','7','6'], ['=','9','8','7','6','5','4','3','2','1','0'], ['1','0','=','9','8','7','6','5','4','3','2'], ['2','1','0','9','8','7','6','5','4','3']]
+excludes = ['++', '+-', '+*', '+/', '+=', '-+', '--', '-*', '-/', '-=', '*+', '*-', '**', '*/', '*=', '/+', '/-', '/*', '//', '/=', '/0']
+includes = []
+digits = [['9','8','7','6','5','4','3','2','1'], ['+','-','*','/','9','8','7','6','5','4','3','2','1','0'], ['+','-','*','/','9','8','7','6','5','4','3','2','1','0'], ['+','-','*','/','9','8','7','6','5','4','3','2','1','0'], ['+','-','*','/','9','8','7','6','5','4','3','2','1','0'], ['=','9','8','7','6','5','4','3','2','1','0'], ['=','9','8','7','6','5','4','3','2','1','0'], ['9','8','7','6','5','4','3','2','1','0']]
 possibleSolution = True
 exclimation = "Woohoo!\n\n\n"
 print ("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green. Or, enter a new Nerdle equation to test.\n")
-getResult("9*8-7=65")
 getResult("0+12/3=4")
+if (len(digits[6]) == 1):
+    getResult("9*8-65=7")
+else:
+    getResult("9*8-7=65")
+if (len(digits[5]) != 1 and len(digits[6]) != 1):
+    digits[4] = ['=']
 randomizeOptimizeDigits()
 while (not nerdle()):
     print()
