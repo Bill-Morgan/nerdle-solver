@@ -116,7 +116,7 @@ if (len(digits[6]) == 1):
     getResult("9*8-65=7")
 else:
     getResult("9*8-7=65")
-if (len(digits[5]) != 1 and len(digits[6]) != 1):
+if '=' not in digits[5] and '=' not in digits[6]:
     digits[4] = ['=']
 randomizeOptimizeDigits()
 while (not nerdle()):
