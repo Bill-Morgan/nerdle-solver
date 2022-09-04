@@ -48,8 +48,7 @@ def isNerdle(equation):
     return ((len(equation) == 8) and 
             (all(eachChar in '0123456789+-*/=' for eachChar in equation)) and
             (not any(exclude in equation for exclude in excludes)) and
-            (equalPos != 7) and
-            (equalPos > 3) and
+            (equalPos in [4,5,6]) and
             (equation.count('=') == 1) and
             (not any(eachChar in '+-*/' for eachChar in equation[equalPos + 1:])) and
             (any(eachChar in "+-*/" for eachChar in equation[:equalPos])) and
@@ -78,6 +77,12 @@ def getResult(equation, prompts= ["      My Guess:  ", "  How did I do?  "]):
             if (result[index] == '2'):
                 digits[index] = [each]
                 foundZero = False
+                if (each in "+-*/="):
+                    for operator in "+-*/=":
+                        if (operator in digits[index - 1]):
+                            digits[index - 1].remove(operator)
+                        if (operator in digits[index + 1]):
+                            digits[index + 1].remove(operator)
             else:
                 if(each in digits[index]):
                     digits[index].remove(each)
