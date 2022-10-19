@@ -124,11 +124,9 @@ else:
     getResult("9*8-7=65")
 if '=' not in digits[5] and '=' not in digits[6]:
     digits[4] = ['=']
-    for operator in "+-*/":
-        if (operator in digits[3]):
-            digits[3].remove(operator)
-        if (operator in digits[5]):
-            digits[5].remove(operator)
+    removeOperators(3)
+    removeOperators(5)
+
 randomizeOptimizeDigits()
 while (not findEquation()):
     if (not possibleSolution):
