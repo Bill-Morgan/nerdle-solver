@@ -1,11 +1,5 @@
-from multiprocessing.sharedctypes import Value
-from operator import truediv
-from posixpath import split
 import random
 import re
-from tokenize import String
-from turtle import numinput
-from unicodedata import digit
 
 
 def findEquation():
