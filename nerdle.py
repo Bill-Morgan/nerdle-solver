@@ -10,27 +10,16 @@ def findEquation():
     for first in digits[0]:
         equation = first
         for second in digits[1]:
-            equation = first + second
             for third in digits[2]:
-                equation = first + second + third
-                if (not re.search(r"[\+\-\*\/]{2}", equation)):
-                    for forth in digits[3]:
-                        equation = first + second + third + forth
-                        if (not re.search(r"[\+\-\*\/]{2}", equation)):
-                            for fifth in digits[4]:
-                                equation = first + second + third + forth + fifth
-                                if (not re.search(r"[\+\-\*\/]{2}", equation)):
-                                    for sixth in digits[5]:
-                                        equation = first + second + third + forth + fifth + sixth
-                                        if (not re.search(r"[\+\-\*\/]{2}", equation)):
-                                            for seventh in digits[6]:
-                                                equation = first + second + third + forth + fifth + sixth + seventh
-                                                if (not re.search(r"[\+\-\*\/]{2}", equation)):
-                                                    for eighth in digits[7]:
-                                                        equation = first + second + third + forth + fifth + sixth + seventh + eighth
-                                                        if (validate(equation)):
-                                                            possibleSolution = True
-                                                            return getResult(equation)
+                for forth in digits[3]:
+                    for fifth in digits[4]:
+                        for sixth in digits[5]:
+                            for seventh in digits[6]:
+                                for eighth in digits[7]:
+                                    equation = first + second + third + forth + fifth + sixth + seventh + eighth
+                                    if (validate(equation)):
+                                        possibleSolution = True
+                                        return getResult(equation)
 
 
 def validate(equation):
@@ -47,7 +36,8 @@ def isNerdle(equation):
             (equation.count('=') == 1) and
             (not any(eachChar in '+-*/' for eachChar in equation[equalPos + 1:])) and
             (any(eachChar in "+-*/" for eachChar in equation[:equalPos])) and
-            (not re.search(r"[-+*\/=]0\d", equation)) and
+            (not re.search(r"[-+*=]0\d", equation)) and
+            (not re.search(r"\/0", equation)) and
             (eval(equation[:equalPos]) == int(equation[equalPos + 1:])))
 
 
@@ -107,7 +97,7 @@ def randomizeOptimizeDigits():
 
 includes = []
 digits = [['0', '9', '8', '7', '6', '5', '4', '3', '2', '1'], ['+', '-', '*', '/', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['+', '-', '*', '/', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['+', '-', '*', '/', '9', '8', '7', '6', '5', '4', '3',
-                                                                                                                                                                                                          '2', '1', '0'], ['+', '-', '*', '/', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['=', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['=', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0']]
+                                                                                                                                                                                                               '2', '1', '0'], ['+', '-', '*', '/', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['=', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['=', '9', '8', '7', '6', '5', '4', '3', '2', '1', '0'], ['9', '8', '7', '6', '5', '4', '3', '2', '1', '0']]
 possibleSolution = True
 exclimation = "Woohoo!\n\n\n"
 print("\n\n\nput a 0 below each black, 1 below each purple and 2 below each green. Or, enter a new Nerdle equation to test.\n")
